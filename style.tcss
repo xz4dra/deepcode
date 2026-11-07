@@ -1,0 +1,444 @@
+/* DeepCode — GitHub-dark, opencode-flavoured theme. */
+
+/* ------------------------------------------------------------------ */
+/* Syntax palette                                                      */
+/* ------------------------------------------------------------------ */
+/* Textual 8 exposes syntax token colours through TextAreaTheme, not   */
+/* through TCSS properties.  CodeEditor reads these $dc-* variables     */
+/* from this file when it registers its editor theme.                  */
+$dc-keyword: #FF7B72;
+$dc-string: #A5D6FF;
+$dc-comment: #8B949E;
+$dc-function: #D2A8FF;
+$dc-type: #FFA657;
+$dc-number: #79C0FF;
+$dc-constant: #79C0FF;
+$dc-variable: #C9D1D9;
+$dc-property: #7EE787;
+$dc-operator: #C9D1D9;
+$dc-punctuation: #C9D1D9;
+$dc-tag: #7EE787;
+$dc-heading: #D2A8FF;
+$dc-error: #F85149;
+
+Screen {
+    background: #0D1117;
+    color: #C9D1D9;
+}
+
+MainScreen {
+    background: #0D1117;
+}
+
+#main {
+    width: 1fr;
+    height: 1fr;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar                                                             */
+/* ------------------------------------------------------------------ */
+
+#sidebar {
+    width: 24;
+    height: 1fr;
+    background: #161B22;
+    border-right: solid #30363D;
+}
+
+#sidebar-title {
+    height: 2;
+    padding: 1 1 0 1;
+    color: #8B949E;
+    text-style: bold;
+}
+
+#tabs {
+    width: 1fr;
+    height: 1fr;
+    padding: 0;
+    scrollbar-size-vertical: 1;
+}
+
+TabItem {
+    width: 1fr;
+    height: 1;
+    border-left: solid #161B22;
+    background: #161B22;
+}
+
+TabItem:hover {
+    background: #21262D;
+    border-left: solid #30363D;
+}
+
+TabItem.active {
+    background: #1C2A3A;
+    border-left: solid #7AA2F7;
+}
+
+TabItem.active:hover {
+    background: #22344A;
+}
+
+.tab-name {
+    width: 1fr;
+    height: 1;
+    padding: 0 1;
+    color: #C9D1D9;
+    text-overflow: ellipsis;
+}
+
+TabItem.active .tab-name {
+    color: #FFFFFF;
+    text-style: bold;
+}
+
+.tab-close {
+    width: 3;
+    height: 1;
+    color: #6E7681;
+    text-align: center;
+}
+
+.tab-close:hover {
+    color: #F85149;
+    background: #30363D;
+}
+
+/* ------------------------------------------------------------------ */
+/* Splash / editor                                                     */
+/* ------------------------------------------------------------------ */
+
+#editor-area {
+    width: 1fr;
+    height: 1fr;
+    background: #0D1117;
+}
+
+WelcomePanel {
+    width: 1fr;
+    height: 1fr;
+    align: center middle;
+    background: #0D1117;
+}
+
+#logo {
+    width: auto;
+    height: auto;
+    color: #C9D1D9;
+    text-align: center;
+    text-wrap: nowrap;
+}
+
+#logo-hint {
+    width: auto;
+    height: 1;
+    margin-top: 1;
+    color: #6E7681;
+    text-align: center;
+}
+
+#logo-hint:hover {
+    color: #C9D1D9;
+    text-style: underline;
+}
+
+#editor {
+    width: 1fr;
+    height: 1fr;
+    display: none;
+    border: none;
+    padding: 0 1;
+    background: #0D1117;
+    color: #C9D1D9;
+}
+
+#editor:focus {
+    border: none;
+}
+
+#editor .text-area--gutter {
+    color: #484F58;
+    background: #0D1117;
+}
+
+#editor .text-area--cursor-gutter {
+    color: #C9D1D9;
+    background: #21262D;
+    text-style: bold;
+}
+
+#editor .text-area--cursor-line {
+    background: #161B22;
+}
+
+#editor .text-area--selection {
+    background: #264F78;
+    color: #FFFFFF;
+}
+
+#editor .text-area--matching-bracket {
+    background: #3B4252;
+}
+
+/* ------------------------------------------------------------------ */
+/* Modal dialogs                                                       */
+/* ------------------------------------------------------------------ */
+
+CommandPaletteScreen,
+FileTreeScreen,
+SearchScreen,
+TextPromptScreen,
+ConfirmCloseScreen {
+    align: center middle;
+    background: #000000 55%;
+}
+
+.dialog {
+    background: #161B22;
+    border: round #30363D;
+    padding: 1;
+}
+
+.dialog-title {
+    height: 1;
+    color: #8B949E;
+    text-style: bold;
+}
+
+.dialog-input {
+    height: 3;
+    border: tall #30363D;
+    background: #0D1117;
+    color: #C9D1D9;
+}
+
+.dialog-input:focus {
+    border: tall #7AA2F7;
+}
+
+.dialog-hint {
+    height: 1;
+    color: #6E7681;
+}
+
+Button {
+    height: 3;
+    min-width: 9;
+    margin: 0 1;
+    border: tall #30363D;
+    background: #21262D;
+    color: #C9D1D9;
+}
+
+Button:hover {
+    border: tall #7AA2F7;
+    background: #30363D;
+    color: #FFFFFF;
+}
+
+Button:focus {
+    border: tall #7AA2F7;
+}
+
+Button.-primary {
+    border: tall #1F6FEB;
+    background: #1F6FEB;
+    color: #FFFFFF;
+}
+
+Button.-primary:hover {
+    border: tall #388BFD;
+    background: #388BFD;
+}
+
+Button.-error {
+    border: tall #DA3633;
+    background: #DA3633;
+    color: #FFFFFF;
+}
+
+Button.-error:hover {
+    border: tall #F85149;
+    background: #F85149;
+}
+
+/* ------------------------------------------------------------------ */
+/* Command palette                                                     */
+/* ------------------------------------------------------------------ */
+
+#palette {
+    width: 80;
+    max-width: 95%;
+    height: 80%;
+    max-height: 32;
+}
+
+#palette-input {
+    margin-top: 1;
+}
+
+#palette-list {
+    height: 1fr;
+    margin-top: 1;
+    scrollbar-size-vertical: 1;
+}
+
+.command-item {
+    width: 1fr;
+    height: 1;
+    background: transparent;
+}
+
+.command-item:hover {
+    background: #30363D;
+}
+
+.command-title {
+    width: 1fr;
+    height: 1;
+    padding: 0 1;
+    color: #C9D1D9;
+}
+
+.command-key {
+    width: auto;
+    height: 1;
+    padding: 0 1;
+    color: #6E7681;
+}
+
+.command-item:hover .command-title {
+    color: #FFFFFF;
+}
+
+.command-item:hover .command-key {
+    color: #C9D1D9;
+}
+
+/* ------------------------------------------------------------------ */
+/* Quick-open file tree                                                */
+/* ------------------------------------------------------------------ */
+
+#filetree {
+    width: 90;
+    max-width: 95%;
+    height: 80%;
+    max-height: 40;
+}
+
+#file-filter {
+    margin-top: 1;
+}
+
+#file-actions {
+    height: 3;
+    margin-top: 1;
+    align: left middle;
+}
+
+#file-actions Button {
+    min-width: 8;
+    margin: 0 1 0 0;
+}
+
+#file-list {
+    height: 1fr;
+    margin-top: 1;
+    scrollbar-size-vertical: 1;
+}
+
+.tree-row {
+    width: 1fr;
+    height: 1;
+    background: transparent;
+}
+
+.tree-row:hover {
+    background: #30363D;
+}
+
+.tree-row.dir {
+    color: #7AA2F7;
+}
+
+.tree-row.dir:hover {
+    color: #A5C8FF;
+}
+
+.tree-row.file {
+    color: #C9D1D9;
+}
+
+.tree-row.file:hover {
+    color: #FFFFFF;
+}
+
+#tree-status {
+    margin-top: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Find / replace                                                      */
+/* ------------------------------------------------------------------ */
+
+#search {
+    width: 78;
+    max-width: 95%;
+    height: auto;
+}
+
+#find-input {
+    margin-top: 1;
+}
+
+#replace-area {
+    height: auto;
+}
+
+#search-status {
+    margin: 0 1;
+}
+
+#search-buttons {
+    height: 3;
+    align: right middle;
+}
+
+/* ------------------------------------------------------------------ */
+/* Prompt / confirm                                                    */
+/* ------------------------------------------------------------------ */
+
+#prompt {
+    width: 70;
+    max-width: 95%;
+    height: auto;
+}
+
+#prompt-input {
+    margin-top: 1;
+}
+
+#prompt-buttons {
+    height: 3;
+    margin-top: 1;
+    align: right middle;
+}
+
+#confirm {
+    width: 64;
+    max-width: 95%;
+    height: auto;
+}
+
+#confirm-text {
+    height: auto;
+    margin: 1 0;
+    color: #C9D1D9;
+}
+
+#confirm-buttons {
+    height: 3;
+    align: right middle;
+}
