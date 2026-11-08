@@ -164,20 +164,20 @@ _LANGUAGE_BY_SUFFIX: dict[str, str] = {
 }
 
 _SYNTAX_COLOR_DEFAULTS: dict[str, str] = {
-    "keyword": "#FF7B72",
-    "string": "#A5D6FF",
-    "comment": "#8B949E",
-    "function": "#D2A8FF",
-    "type": "#FFA657",
-    "number": "#79C0FF",
-    "constant": "#79C0FF",
-    "variable": "#C9D1D9",
-    "property": "#7EE787",
-    "operator": "#C9D1D9",
-    "punctuation": "#C9D1D9",
-    "tag": "#7EE787",
-    "heading": "#D2A8FF",
-    "error": "#F85149",
+    "keyword": "#7AA2F7",
+    "string": "#9ECE6A",
+    "comment": "#565F89",
+    "function": "#7AA2F7",
+    "type": "#2AC3DE",
+    "number": "#FF9E64",
+    "constant": "#FF9E64",
+    "variable": "#C0CAF5",
+    "property": "#73DACA",
+    "operator": "#89DDFF",
+    "punctuation": "#A9B1D6",
+    "tag": "#F7768E",
+    "heading": "#7AA2F7",
+    "error": "#F7768E",
 }
 
 
@@ -198,6 +198,28 @@ def detect_language(path: Path | None, text: str = "") -> str | None:
             return "bash"
 
     return None
+
+
+_LANGUAGE_LABELS: dict[str, str] = {
+    "python": "Python",
+    "json": "JSON",
+    "toml": "TOML",
+    "yaml": "YAML",
+    "markdown": "Markdown",
+    "html": "HTML",
+    "javascript": "JavaScript",
+    "css": "CSS",
+    "xml": "XML",
+    "java": "Java",
+    "sql": "SQL",
+    "bash": "Bash",
+    "rust": "Rust",
+    "go": "Go",
+}
+
+
+def language_label(path: Path | None, text: str = "") -> str:
+    return _LANGUAGE_LABELS.get(detect_language(path, text), "Plain Text")
 
 
 def _load_syntax_colors() -> dict[str, str]:
@@ -313,15 +335,15 @@ def build_deepcode_theme() -> TextAreaTheme:
 
     return TextAreaTheme(
         name="deepcode",
-        base_style=Style(color="#C9D1D9", bgcolor="#0D1117"),
-        gutter_style=Style(color="#484F58", bgcolor="#0D1117"),
-        cursor_style=Style(color="#0D1117", bgcolor="#C9D1D9"),
-        cursor_line_style=Style(bgcolor="#161B22"),
+        base_style=Style(color="#A9B1D6", bgcolor="#1A1B26"),
+        gutter_style=Style(color="#3B4261", bgcolor="#1A1B26"),
+        cursor_style=Style(color="#1A1B26", bgcolor="#C0CAF5"),
+        cursor_line_style=Style(bgcolor="#1F2335"),
         cursor_line_gutter_style=Style(
-            color="#C9D1D9", bgcolor="#21262D", bold=True
+            color="#A9B1D6", bgcolor="#24283B", bold=True
         ),
-        selection_style=Style(bgcolor="#264F78", color="#FFFFFF"),
-        bracket_matching_style=Style(bgcolor="#3B4252"),
+        selection_style=Style(bgcolor="#28344A", color="#C0CAF5"),
+        bracket_matching_style=Style(bgcolor="#2F334D"),
         syntax_styles=syntax_styles,
     )
 
@@ -345,8 +367,8 @@ class CodeEditor(TextArea):
         self.theme = "deepcode"
         self._search_ranges: list[tuple[tuple[int, int], tuple[int, int]]] = []
         self._search_current = -1
-        self._match_style = Style(bgcolor="#3A3018", color="#E6EDF3")
-        self._current_match_style = Style(bgcolor="#9E6A03", color="#FFFFFF")
+        self._match_style = Style(bgcolor="#28344A", color="#C0CAF5")
+        self._current_match_style = Style(bgcolor="#E0AF68", color="#1A1B26")
 
     # -- search ---------------------------------------------------------
 
@@ -478,6 +500,36 @@ class OpenHint(Static):
         action = getattr(screen, "action_open_file", None)
         if action is not None:
             action()
+
+
+class StatusBar(Horizontal):
+    """One-line VS Code-style status bar."""
+
+    def compose(self) -> ComposeResult:
+        yield Static("DeepCode", id="status-path")
+        yield Static("", id="status-position")
+        yield Static("", id="status-language")
+        yield Static("UTF-8", id="status-encoding")
+
+    def update_status(
+        self,
+        path_text: str,
+        position: str,
+        language: str,
+        *,
+        modified: bool = False,
+        full_path: str = "",
+    ) -> None:
+        path_widget = self.query_one("#status-path", Static)
+        path_widget.update(
+            Text.assemble(
+                (path_text, "#A9B1D6"),
+                (" ●", "#E0AF68") if modified else "",
+            )
+        )
+        path_widget.tooltip = full_path or path_text
+        self.query_one("#status-position", Static).update(position)
+        self.query_one("#status-language", Static).update(language)
 
 
 class CommandItem(Horizontal):
@@ -1414,20 +1466,22 @@ class MainScreen(Screen[None]):
     # -- composition ----------------------------------------------------
 
     def compose(self) -> ComposeResult:
-        with Horizontal(id="main"):
-            with Vertical(id="sidebar"):
-                yield Static("OPEN FILES", id="sidebar-title")
-                yield VerticalScroll(id="tabs")
-            with Vertical(id="editor-area"):
-                with WelcomePanel(id="welcome"):
-                    yield Static(LOGO, id="logo")
-                    yield OpenHint(
-                        "Press Ctrl+P to open file", id="logo-hint"
-                    )
-                yield CodeEditor(id="editor")
+        with Vertical(id="app-root"):
+            with Horizontal(id="main"):
+                with Vertical(id="sidebar"):
+                    yield VerticalScroll(id="tabs")
+                with Vertical(id="editor-area"):
+                    with WelcomePanel(id="welcome"):
+                        yield Static(LOGO, id="logo")
+                        yield OpenHint(
+                            "Press Ctrl+P to open file", id="logo-hint"
+                        )
+                    yield CodeEditor(id="editor")
+            yield StatusBar(id="status-bar")
 
     def on_mount(self) -> None:
         self.query_one("#welcome", WelcomePanel).focus()
+        self._update_status()
         if self.api_enabled:
             self._start_api_server()
         if self.initial_file is not None:
@@ -1539,6 +1593,35 @@ class MainScreen(Screen[None]):
             return self.documents[self.active_index]
         return None
 
+    def _update_status(self) -> None:
+        bar = next(iter(self.query(StatusBar)), None)
+        if bar is None:
+            return
+
+        document = self.current_doc
+        if document is None:
+            bar.update_status("DeepCode", "", "")
+            return
+
+        if document.path is not None:
+            try:
+                path_text = document.path.relative_to(self.workspace).as_posix()
+            except ValueError:
+                path_text = str(document.path)
+            full_path = str(document.path)
+        else:
+            path_text = document.name
+            full_path = ""
+
+        line, column = self.editor.cursor_location
+        bar.update_status(
+            path_text,
+            f"{line + 1}:{column + 1}",
+            language_label(document.path, document.text),
+            modified=document.modified,
+            full_path=full_path,
+        )
+
     # -- document lifecycle --------------------------------------------
 
     def _sync_active(self) -> None:
@@ -1556,6 +1639,7 @@ class MainScreen(Screen[None]):
                 self.editor.language = language
         except LanguageDoesNotExist:
             self.editor.language = None
+        self._update_status()
 
     def _load_doc(self, doc: Document) -> None:
         self._loading = True
@@ -1568,6 +1652,7 @@ class MainScreen(Screen[None]):
         self.editor.display = True
         self.welcome.display = False
         self.editor.focus()
+        self._update_status()
         scroll_y = doc.scroll_y
         self.call_after_refresh(
             lambda: self.editor.scroll_to(0, scroll_y, animate=False, immediate=True)
@@ -1678,6 +1763,7 @@ class MainScreen(Screen[None]):
                 self._loading = False
             self.welcome.display = True
             self.welcome.focus()
+            self._update_status()
         elif was_active:
             self.active_index = min(index, len(self.documents) - 1)
             self._load_doc(self.documents[self.active_index])
@@ -1791,6 +1877,7 @@ class MainScreen(Screen[None]):
             tab.set_name(document.name)
             tab.set_modified(False)
             tab.tooltip = str(document.path)
+        self._update_status()
         if notify:
             self.notify(f"Saved {document.name}", timeout=1.5)
         return True
@@ -2170,6 +2257,7 @@ class MainScreen(Screen[None]):
             self.editor.focus()
         index = self._doc_index(document)
         self._update_modified(index, False)
+        self._update_status()
         self.notify(f"Reloaded {document.name}", timeout=2)
 
     async def action_close_all(self) -> None:
@@ -2206,6 +2294,7 @@ class MainScreen(Screen[None]):
         self.editor.display = False
         self.welcome.display = True
         self.welcome.focus()
+        self._update_status()
         await self._rebuild_tabs()
 
     def action_api_info(self) -> None:
@@ -2473,6 +2562,13 @@ class MainScreen(Screen[None]):
         if modified != document.modified:
             document.modified = modified
             self._update_modified(self.active_index, modified)
+        self._update_status()
+
+    def on_text_area_selection_changed(
+        self, event: TextArea.SelectionChanged
+    ) -> None:
+        if event.text_area is self.editor:
+            self._update_status()
 
     def on_tab_item_activated(self, message: TabItem.Activated) -> None:
         self._activate_index(message.index)

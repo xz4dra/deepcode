@@ -1,132 +1,137 @@
-/* DeepCode — GitHub-dark, opencode-flavoured theme. */
+/* DeepCode — TokyoNight flat theme. */
 
 /* ------------------------------------------------------------------ */
 /* Syntax palette                                                      */
 /* ------------------------------------------------------------------ */
 /* Textual 8 exposes syntax token colours through TextAreaTheme, not   */
-/* through TCSS properties.  CodeEditor reads these $dc-* variables     */
+/* through TCSS properties. CodeEditor reads these $dc-* variables     */
 /* from this file when it registers its editor theme.                  */
-$dc-keyword: #FF7B72;
-$dc-string: #A5D6FF;
-$dc-comment: #8B949E;
-$dc-function: #D2A8FF;
-$dc-type: #FFA657;
-$dc-number: #79C0FF;
-$dc-constant: #79C0FF;
-$dc-variable: #C9D1D9;
-$dc-property: #7EE787;
-$dc-operator: #C9D1D9;
-$dc-punctuation: #C9D1D9;
-$dc-tag: #7EE787;
-$dc-heading: #D2A8FF;
-$dc-error: #F85149;
+$dc-keyword: #7AA2F7;
+$dc-string: #9ECE6A;
+$dc-comment: #565F89;
+$dc-function: #7AA2F7;
+$dc-type: #2AC3DE;
+$dc-number: #FF9E64;
+$dc-constant: #FF9E64;
+$dc-variable: #C0CAF5;
+$dc-property: #73DACA;
+$dc-operator: #89DDFF;
+$dc-punctuation: #A9B1D6;
+$dc-tag: #F7768E;
+$dc-heading: #7AA2F7;
+$dc-error: #F7768E;
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
 
 Screen {
-    background: #0D1117;
-    color: #C9D1D9;
+    background: #1A1B26;
+    color: #A9B1D6;
 }
 
 MainScreen {
-    background: #0D1117;
+    background: #1A1B26;
+}
+
+#app-root {
+    width: 1fr;
+    height: 1fr;
+    background: #1A1B26;
 }
 
 #main {
     width: 1fr;
     height: 1fr;
+    background: #1A1B26;
 }
 
 /* ------------------------------------------------------------------ */
-/* Sidebar                                                             */
+/* Sidebar: open tabs only                                             */
 /* ------------------------------------------------------------------ */
 
 #sidebar {
-    width: 24;
+    width: 28;
     height: 1fr;
-    background: #161B22;
-    border-right: solid #30363D;
-}
-
-#sidebar-title {
-    height: 2;
-    padding: 1 1 0 1;
-    color: #8B949E;
-    text-style: bold;
+    background: #16161E;
 }
 
 #tabs {
     width: 1fr;
     height: 1fr;
     padding: 0;
+    background: #16161E;
     scrollbar-size-vertical: 1;
+    scrollbar-background: #16161E;
+    scrollbar-color: #3B4261;
+    scrollbar-color-hover: #565F89;
+    scrollbar-color-active: #7AA2F7;
 }
 
 TabItem {
     width: 1fr;
     height: 1;
-    border-left: solid #161B22;
-    background: #161B22;
+    background: #16161E;
 }
 
 TabItem:hover {
-    background: #21262D;
-    border-left: solid #30363D;
+    background: #1F2335;
 }
 
 TabItem.active {
-    background: #1C2A3A;
-    border-left: solid #7AA2F7;
+    background: #24283B;
 }
 
 TabItem.active:hover {
-    background: #22344A;
+    background: #2A2F45;
 }
 
 .tab-name {
     width: 1fr;
     height: 1;
     padding: 0 1;
-    color: #C9D1D9;
+    color: #A9B1D6;
     text-overflow: ellipsis;
 }
 
 TabItem.active .tab-name {
-    color: #FFFFFF;
+    color: #C0CAF5;
     text-style: bold;
 }
 
 .tab-close {
     width: 3;
     height: 1;
-    color: #6E7681;
+    color: #565F89;
     text-align: center;
 }
 
 .tab-close:hover {
-    color: #F85149;
-    background: #30363D;
+    color: #F7768E;
+    background: #24283B;
 }
 
 /* ------------------------------------------------------------------ */
-/* Splash / editor                                                     */
+/* Editor                                                              */
 /* ------------------------------------------------------------------ */
 
 #editor-area {
     width: 1fr;
     height: 1fr;
-    background: #0D1117;
+    background: #1A1B26;
 }
 
 WelcomePanel {
     width: 1fr;
     height: 1fr;
     align: center middle;
-    background: #0D1117;
+    background: #1A1B26;
 }
 
 #logo {
     width: auto;
     height: auto;
-    color: #C9D1D9;
+    color: #A9B1D6;
     text-align: center;
     text-wrap: nowrap;
 }
@@ -135,12 +140,12 @@ WelcomePanel {
     width: auto;
     height: 1;
     margin-top: 1;
-    color: #6E7681;
+    color: #565F89;
     text-align: center;
 }
 
 #logo-hint:hover {
-    color: #C9D1D9;
+    color: #A9B1D6;
     text-style: underline;
 }
 
@@ -150,8 +155,12 @@ WelcomePanel {
     display: none;
     border: none;
     padding: 0 1;
-    background: #0D1117;
-    color: #C9D1D9;
+    background: #1A1B26;
+    color: #A9B1D6;
+    scrollbar-background: #1A1B26;
+    scrollbar-color: #3B4261;
+    scrollbar-color-hover: #565F89;
+    scrollbar-color-active: #7AA2F7;
 }
 
 #editor:focus {
@@ -159,27 +168,69 @@ WelcomePanel {
 }
 
 #editor .text-area--gutter {
-    color: #484F58;
-    background: #0D1117;
+    color: #3B4261;
+    background: #1A1B26;
 }
 
 #editor .text-area--cursor-gutter {
-    color: #C9D1D9;
-    background: #21262D;
+    color: #A9B1D6;
+    background: #24283B;
     text-style: bold;
 }
 
 #editor .text-area--cursor-line {
-    background: #161B22;
+    background: #1F2335;
 }
 
 #editor .text-area--selection {
-    background: #264F78;
-    color: #FFFFFF;
+    background: #28344A;
+    color: #C0CAF5;
 }
 
 #editor .text-area--matching-bracket {
-    background: #3B4252;
+    background: #2F334D;
+}
+
+/* ------------------------------------------------------------------ */
+/* Status bar                                                          */
+/* ------------------------------------------------------------------ */
+
+#status-bar {
+    width: 1fr;
+    height: 1;
+    padding: 0 1;
+    background: #16161E;
+    color: #A9B1D6;
+}
+
+#status-path {
+    width: 1fr;
+    height: 1;
+    color: #A9B1D6;
+    text-overflow: ellipsis;
+}
+
+#status-position {
+    width: 10;
+    height: 1;
+    color: #9ECE6A;
+    text-align: center;
+    text-style: bold;
+}
+
+#status-language {
+    width: auto;
+    height: 1;
+    padding: 0 2 0 1;
+    color: #7AA2F7;
+    text-style: bold;
+}
+
+#status-encoding {
+    width: 7;
+    height: 1;
+    color: #565F89;
+    text-align: right;
 }
 
 /* ------------------------------------------------------------------ */
@@ -196,72 +247,76 @@ ConfirmCloseScreen {
 }
 
 .dialog {
-    background: #161B22;
-    border: round #30363D;
-    padding: 1;
+    background: #1A1B26;
+    border: none;
+    padding: 1 2;
 }
 
 .dialog-title {
     height: 1;
-    color: #8B949E;
+    color: #7AA2F7;
     text-style: bold;
 }
 
 .dialog-input {
     height: 3;
-    border: tall #30363D;
-    background: #0D1117;
-    color: #C9D1D9;
+    border: none;
+    padding: 0 1;
+    background: #24283B;
+    color: #C0CAF5;
 }
 
 .dialog-input:focus {
-    border: tall #7AA2F7;
+    border: none;
+    background: #2F334D;
+    color: #FFFFFF;
 }
 
 .dialog-hint {
     height: 1;
-    color: #6E7681;
+    color: #565F89;
 }
 
 Button {
     height: 3;
     min-width: 9;
     margin: 0 1;
-    border: tall #30363D;
-    background: #21262D;
-    color: #C9D1D9;
+    border: none;
+    background: #24283B;
+    color: #A9B1D6;
 }
 
 Button:hover {
-    border: tall #7AA2F7;
-    background: #30363D;
-    color: #FFFFFF;
+    background: #2F334D;
+    color: #C0CAF5;
 }
 
 Button:focus {
-    border: tall #7AA2F7;
+    background: #2F334D;
+    color: #C0CAF5;
+    text-style: bold;
 }
 
 Button.-primary {
-    border: tall #1F6FEB;
-    background: #1F6FEB;
-    color: #FFFFFF;
+    background: #7AA2F7;
+    color: #1A1B26;
+    text-style: bold;
 }
 
 Button.-primary:hover {
-    border: tall #388BFD;
-    background: #388BFD;
+    background: #89DDFF;
+    color: #1A1B26;
 }
 
 Button.-error {
-    border: tall #DA3633;
-    background: #DA3633;
-    color: #FFFFFF;
+    background: #F7768E;
+    color: #1A1B26;
+    text-style: bold;
 }
 
 Button.-error:hover {
-    border: tall #F85149;
-    background: #F85149;
+    background: #FF9E64;
+    color: #1A1B26;
 }
 
 /* ------------------------------------------------------------------ */
@@ -273,6 +328,7 @@ Button.-error:hover {
     max-width: 95%;
     height: 80%;
     max-height: 32;
+    background: #1A1B26;
 }
 
 #palette-input {
@@ -282,7 +338,12 @@ Button.-error:hover {
 #palette-list {
     height: 1fr;
     margin-top: 1;
+    background: #1A1B26;
     scrollbar-size-vertical: 1;
+    scrollbar-background: #1A1B26;
+    scrollbar-color: #3B4261;
+    scrollbar-color-hover: #565F89;
+    scrollbar-color-active: #7AA2F7;
 }
 
 .command-item {
@@ -292,29 +353,29 @@ Button.-error:hover {
 }
 
 .command-item:hover {
-    background: #30363D;
+    background: #24283B;
 }
 
 .command-title {
     width: 1fr;
     height: 1;
     padding: 0 1;
-    color: #C9D1D9;
+    color: #A9B1D6;
 }
 
 .command-key {
     width: auto;
     height: 1;
     padding: 0 1;
-    color: #6E7681;
+    color: #565F89;
 }
 
 .command-item:hover .command-title {
-    color: #FFFFFF;
+    color: #C0CAF5;
 }
 
 .command-item:hover .command-key {
-    color: #C9D1D9;
+    color: #7AA2F7;
 }
 
 /* ------------------------------------------------------------------ */
@@ -326,6 +387,7 @@ Button.-error:hover {
     max-width: 95%;
     height: 80%;
     max-height: 40;
+    background: #1A1B26;
 }
 
 #file-filter {
@@ -346,17 +408,23 @@ Button.-error:hover {
 #file-list {
     height: 1fr;
     margin-top: 1;
+    background: #1A1B26;
     scrollbar-size-vertical: 1;
+    scrollbar-background: #1A1B26;
+    scrollbar-color: #3B4261;
+    scrollbar-color-hover: #565F89;
+    scrollbar-color-active: #7AA2F7;
 }
 
 .tree-row {
     width: 1fr;
     height: 1;
+    padding: 0 1;
     background: transparent;
 }
 
 .tree-row:hover {
-    background: #30363D;
+    background: #24283B;
 }
 
 .tree-row.dir {
@@ -364,19 +432,20 @@ Button.-error:hover {
 }
 
 .tree-row.dir:hover {
-    color: #A5C8FF;
+    color: #89DDFF;
 }
 
 .tree-row.file {
-    color: #C9D1D9;
+    color: #A9B1D6;
 }
 
 .tree-row.file:hover {
-    color: #FFFFFF;
+    color: #C0CAF5;
 }
 
 #tree-status {
     margin-top: 1;
+    color: #565F89;
 }
 
 /* ------------------------------------------------------------------ */
@@ -387,6 +456,7 @@ Button.-error:hover {
     width: 78;
     max-width: 95%;
     height: auto;
+    background: #1A1B26;
 }
 
 #find-input {
@@ -399,6 +469,7 @@ Button.-error:hover {
 
 #search-status {
     margin: 0 1;
+    color: #565F89;
 }
 
 #search-buttons {
@@ -414,6 +485,7 @@ Button.-error:hover {
     width: 70;
     max-width: 95%;
     height: auto;
+    background: #1A1B26;
 }
 
 #prompt-input {
@@ -430,12 +502,13 @@ Button.-error:hover {
     width: 64;
     max-width: 95%;
     height: auto;
+    background: #1A1B26;
 }
 
 #confirm-text {
     height: auto;
     margin: 1 0;
-    color: #C9D1D9;
+    color: #A9B1D6;
 }
 
 #confirm-buttons {
